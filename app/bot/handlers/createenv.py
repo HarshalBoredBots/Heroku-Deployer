@@ -36,7 +36,7 @@ async def _prompt_dyno_types(message, user_id: int) -> None:
     default = get_settings().default_dyno_type
     for s in sizes[:20]:
         cost = s.get("cost", {})
-        price = f"${cost.get('cents', 0) // 100}/mo" if cost else ""
+        price = f"${(cost.get('cents') or 0) // 100}/mo" if cost else ""
         label = f"{s['name']} {price}".strip()
         buttons.append([InlineKeyboardButton(label, callback_data=f"ct:dtype:{s['name']}")])
     markup = InlineKeyboardMarkup(buttons) if buttons else None
